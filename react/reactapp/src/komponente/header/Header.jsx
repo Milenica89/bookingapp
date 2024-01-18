@@ -10,11 +10,25 @@ const Header = () => {
   const [openDate, setOpenDate]= useState(false)
   const [date, setDate] = useState([
     {
-      startDate: new Date(),
-      endDate: new Date(),
+      od: new Date(),
+      do: new Date(),
       key: "selection",
-    }
+    },
   ]);
+  const [openOptions, setOpenOptions]= useState(false);
+  const [options, setOptions]= useState({
+     odrasli:1,
+     deca: 0,
+     jedinica: 1,
+  });
+  const handleOption = (name, operation) => {
+    setOptions((prev) => {
+      return {
+        ...prev,
+        [name]: operation === "i" ? options[name] + 1 : options[name] - 1,
+      };
+    });
+  };
   return (
     <div className="header">
       <div className="headerContainer">
@@ -57,7 +71,7 @@ const Header = () => {
           </div>
           <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCalendarDays} classname="headerIcon" />
-                <span onClick={()=>setOpenDate(!openDate)} className="headerSearchText">{`${format(date[0].startDate, "MM/dd/yyyy")} do ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
+                <span onClick={()=>setOpenDate(!openDate)} className="headerSearchText">{`${format(date[0].od, "MM/dd/yyyy")} do ${format(date[0].do, "MM/dd/yyyy")}`}</span>
                 {openDate && <DateRange
                 editableDateInputs={true}
                 onChange={item => setDate([item.selection])}
@@ -68,7 +82,45 @@ const Header = () => {
           </div>
           <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faPerson} classname="headerIcon" />
-                <span className="headerSearchText">2 odrasla 2 dece 1 jedinica</span>
+                <span onClick={()=>setOpenOptions(!openOptions)} className="headerSearchText">{`${options.odrasli} odrasli · ${options.deca} deca · ${options.jedinica} jedinica`}</span>
+                {openOptions && <div className="options">
+                  <div className="optionItem">
+                    <span className="optionText">Odrasli</span>
+                    <div className="optionCounter">
+                    <button
+                    disabled={options.odrasli <=1} 
+                    className="optionCounterButton" 
+                    onClick={()=>handleOption("odrasli", "d")}>-</button>
+                    <span className="optionCounterNumber">{options.odrasli}</span>
+                    <button 
+                    className="optionCounterButton" 
+                    onClick={()=>handleOption("odrasli", "i")}>+</button>
+                    </div>
+                  </div>
+                  <div className="optionItem">
+                    <span className="optionText">Deca</span>
+                    <div className="optionCounter">
+                    <button className="optionCounterButton"
+                     disabled={options.deca <=0} 
+                     onClick={()=>handleOption("deca", "d")}>-</button>
+                    <span className="optionCounterNumber">{options.deca}</span>
+                    <button className="optionCounterButton"
+                     onClick={()=>handleOption("deca", "i")}>+</button>
+                    </div>
+                  </div>
+                  <div className="optionItem">
+                    <span className="optionText">Jedinica</span>
+                    <div className="optionCounter">
+                    <button 
+                     disabled={options.jedinica <=1} 
+                     className="optionCounterButton"
+                     onClick={()=>handleOption("jedinica", "d")}>-</button>
+                    <span className="optionCounterNumber">{options.jedinica}</span>
+                    <button className="optionCounterButton"
+                     onClick={()=>handleOption("jedinica", "i")}>+</button>
+                    </div>
+                  </div>
+                  </div>}
           </div>
           <div className="headerSearchItem">
                 <button className="headerBtn">Traži</button>
