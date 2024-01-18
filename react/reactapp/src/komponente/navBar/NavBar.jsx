@@ -6,8 +6,8 @@ const NavBar = () => {
         <div className="navContainer">
             <span classname="logo">mvbooking</span>
             <div className="navItems">
-                <button className="navButton">Register</button>
-                <button className="navButton">Login</button>
+                <button className="navButton">Registrujte se</button>
+                <button className="navButton">Ulogujte se</button>
             </div>
         </div>
     </div>

@@ -1,9 +1,13 @@
+import Header from "../../komponente/header/Header"
 import NavBar from "../../komponente/navBar/NavBar"
 import "./pocetna.css"
 
 const Pocetna = () => {
   return (
-    <div><NavBar /></div>
+    <div>
+      <NavBar />
+      <Header />
+    </div>
   )
 }
 
